@@ -76,7 +76,8 @@ struct GlobalVarTranslationContext
             {
 
                 auto semanticDecor = param->findDecoration<IRSemanticDecoration>();
-                if (semanticDecor && semanticDecor->getSemanticName().startsWithCaseInsensitive(toSlice("sv_")))
+                if (semanticDecor &&
+                    semanticDecor->getSemanticName().startsWithCaseInsensitive(toSlice("sv_")))
                     continue;
                 else
                 {
@@ -88,7 +89,8 @@ struct GlobalVarTranslationContext
             for (auto input : inputVars)
             {
                 auto semanticDecor = input->findDecoration<IRSemanticDecoration>();
-                if (semanticDecor && semanticDecor->getSemanticName().startsWithCaseInsensitive(toSlice("sv_")))
+                if (semanticDecor &&
+                    semanticDecor->getSemanticName().startsWithCaseInsensitive(toSlice("sv_")))
                     continue;
                 else
                 {
@@ -325,17 +327,23 @@ struct GlobalVarTranslationContext
             {
                 if (paramLayout)
                 {
-                    if (auto paramGroupTypeLayout = as<IRParameterGroupTypeLayout>(entryPointParamsStructLayout))
+                    if (auto paramGroupTypeLayout =
+                            as<IRParameterGroupTypeLayout>(entryPointParamsStructLayout))
                     {
                         IRParameterGroupTypeLayout::Builder paramGroupTypeLayoutBuilder(&builder);
-                        paramGroupTypeLayoutBuilder.setContainerVarLayout(paramGroupTypeLayout->getContainerVarLayout());
+                        paramGroupTypeLayoutBuilder.setContainerVarLayout(
+                            paramGroupTypeLayout->getContainerVarLayout());
                         paramGroupTypeLayoutBuilder.setElementVarLayout(paramLayout);
                         paramGroupTypeLayoutBuilder.setOffsetElementTypeLayout(paramTypeLayout);
-                        builder.replaceOperand(entryPointLayout->getParamsLayout()->getOperands(), paramGroupTypeLayoutBuilder.build());
+                        builder.replaceOperand(
+                            entryPointLayout->getParamsLayout()->getOperands(),
+                            paramGroupTypeLayoutBuilder.build());
                     }
                     else if (as<IRStructTypeLayout>(entryPointParamsStructLayout))
                     {
-                        builder.replaceOperand(entryPointLayout->getParamsLayout()->getOperands(), paramTypeLayout);
+                        builder.replaceOperand(
+                            entryPointLayout->getParamsLayout()->getOperands(),
+                            paramTypeLayout);
                     }
                     else
                     {
@@ -345,9 +353,7 @@ struct GlobalVarTranslationContext
                     }
                 }
                 if (resultVarLayout)
-                    builder.replaceOperand(
-                        entryPointLayout->getOperands() + 1,
-                        resultVarLayout);
+                    builder.replaceOperand(entryPointLayout->getOperands() + 1, resultVarLayout);
             }
             // Update func type for the entry point.
             List<IRType*> paramTypes;
