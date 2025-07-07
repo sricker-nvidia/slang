@@ -3255,7 +3255,8 @@ void SemanticsDeclHeaderVisitor::collectReferencedDecls(Type* type, List<Decl*>&
     }
 }
 
-void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(GenericTypeConstraintDecl* decl)
+void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(
+    GenericTypeConstraintDecl* decl)
 {
     // Check if this constraint references type parameters that appear later
     // in the same GenericDecl's parameter list and report a forward reference error
@@ -3294,11 +3295,13 @@ void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(Gener
     {
         if (auto typeParam = as<GenericTypeParamDeclBase>(referencedDecl))
         {
-            // Check if this type parameter belongs to the same generic and comes after the constraint
+            // Check if this type parameter belongs to the same generic and comes after the
+            // constraint
             if (typeParam->parentDecl == parentGeneric)
             {
                 // Find the type parameter's position
-                for (Index i = constraintIndex + 1; i < parentGeneric->getDirectMemberDeclCount(); ++i)
+                for (Index i = constraintIndex + 1; i < parentGeneric->getDirectMemberDeclCount();
+                     ++i)
                 {
                     if (parentGeneric->getDirectMemberDecl(i) == typeParam)
                     {
@@ -3335,7 +3338,8 @@ void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(Gener
                                 getName("(unknown)"),
                                 forwardParamName ? forwardParamName : getName("(unnamed)"));
                         }
-                        break; // Break out of the inner loop, but continue checking other referenced decls
+                        break; // Break out of the inner loop, but continue checking other
+                               // referenced decls
                     }
                 }
             }
