@@ -3256,7 +3256,8 @@ void SemanticsDeclHeaderVisitor::collectReferencedDecls(Val* val, HashSet<Decl*>
     }
 }
 
-void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(GenericTypeConstraintDecl* decl)
+void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(
+    GenericTypeConstraintDecl* decl)
 {
     // Check if this constraint references type parameters that appear later
     // in the same GenericDecl's parameter list and report a forward reference error
@@ -3301,13 +3302,16 @@ void SemanticsDeclHeaderVisitor::checkForwardReferencesInGenericConstraint(Gener
     HashSet<Decl*> referencedDecls;
     collectReferencedDecls(decl->sup.type, referencedDecls);
 
-    // Check if any of the referenced declarations are forward references (not in our "declared so far" set)
+    // Check if any of the referenced declarations are forward references (not in our "declared so
+    // far" set)
     for (auto referencedDecl : referencedDecls)
     {
         if (auto typeParam = as<GenericTypeParamDeclBase>(referencedDecl))
         {
-            // Check if this type parameter belongs to the same generic but is NOT in our "declared so far" set
-            if (typeParam->parentDecl == parentGeneric && !declaredBeforeConstraint.contains(typeParam))
+            // Check if this type parameter belongs to the same generic but is NOT in our "declared
+            // so far" set
+            if (typeParam->parentDecl == parentGeneric &&
+                !declaredBeforeConstraint.contains(typeParam))
             {
                 // Found a forward reference, report an error.
 
